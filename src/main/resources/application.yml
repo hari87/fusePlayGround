@@ -1,0 +1,57 @@
+camel:
+  springboot:
+        name: CamelRestJpa
+swagger:
+   port: 8085
+
+server:
+  port: 8083
+  address: 0.0.0.0
+management:
+   address: 0.0.0.0
+   port: 8082
+
+# disable all management enpoints except health
+endpoints:
+  enabled: false
+  health:
+    enabled: true
+    
+amq:
+  url: tcp://192.168.99.100:61616
+
+component:
+    servlet:
+      mapping:
+        contextPath: /camel-rest-jpa/*
+
+mysql:
+  service:
+    # The host of the MySQL database server, can be customized using
+    # the 'MYSQL_SERVICE_HOST' env variable
+    host:     192.168.99.100
+    # The port of the MySQL database server, can be customized using
+    # the 'MYSQL_SERVICE_PORT' env variable
+    port:     43306
+    # The database to use, can be customized using the 'MYSQL_SERVICE_DATABASE'
+    # env variable
+    database: devoteam
+    username: root
+    password: example
+    driverclassName: com.mysql.cj.jdbc.Driver
+    
+    
+spring:
+  # Spring JDBC configuration
+  datasource:
+    url:      jdbc:mysql://${mysql.service.host}:${mysql.service.port}/${mysql.service.database}
+    username: ${mysql.service.username}
+    password: ${mysql.service.password}
+    
+  # Spring Data JPA configuration
+  jpa:
+    hibernate:
+      # To be updated in real production usage!
+      ddl-auto: none
+      show-sql: false
+    

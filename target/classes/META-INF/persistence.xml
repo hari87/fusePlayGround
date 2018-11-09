@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             version="1.0">
+
+  <persistence-unit name="camel1" transaction-type="RESOURCE_LOCAL">
+    <class>nl.devoteam.Userr</class>
+
+    <properties>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+      <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="hibernate.connection.url" value="jdbc:mysql://192.168.99.100:43306/devoteam"/>
+      <property name="hibernate.connection.user" value="root"/>
+      <property name="hibernate.connection.password" value="example"/>
+      <property name="hibernate.hbm2ddl.auto" value="none"/>
+      <property name="hibernate.connection.username" value="root"></property>
+    </properties>
+	
+  </persistence-unit>
+</persistence>      
