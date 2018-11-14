@@ -22,6 +22,9 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A spring-boot application that includes a Camel route builder to setup the Camel routes
  */
@@ -33,6 +36,7 @@ public class Application {
 
     // must have a main method spring-boot can run
     public static void main(String[] args) {
+    	//final Logger logger = LoggerFactory.getLogger(Application.class);
         SpringApplication.run(Application.class, args);
     }
 

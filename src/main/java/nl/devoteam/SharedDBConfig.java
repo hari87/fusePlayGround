@@ -2,30 +2,23 @@ package nl.devoteam;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.sql.DataSource;
-import javax.transaction.TransactionManager;
-
 import org.apache.camel.CamelContext;
-import org.apache.camel.component.jpa.JpaComponent;
 import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
-import org.apache.camel.spring.spi.SpringTransactionPolicy;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
+
 
 @Configuration
 public class SharedDBConfig {
@@ -47,7 +40,7 @@ public class SharedDBConfig {
         ds.setUsername(db_username);
         ds.setPassword(db_password);
         ds.setUrl(mysqlUrl);
-        ds.setInitialSize(3);
+        ds.setInitialSize(1);
         return ds;
     }
 	
@@ -62,15 +55,25 @@ public class SharedDBConfig {
 	//----------JPA SPECIFIC - BEGINS-----------------------------
 	//Map<String, String> entityMgrValues = new HashMap<String, String>();
 	
+	/**
+	 * @author Devoteam
+	 *The datasource defined here are meant for configuring entityManager & 
+	 *transaction manager. Though the datasource are repititive in nature, it 
+	 *is also possible to do away with this by commenting the following line of code
+	 *jpaComponent.setEntityManagerFactory(sharedDBConfig.factory);
+	 * jpaComponent.setTransactionManager(sharedDBConfig.ptManager());
+	 *	which is created in route (at present is available in ProcessTimer.java file)
+	 *However the need and best way to use it is somthing that should be discussed. 
+	 *Meanwhile, I have checked the total number of connections created and could see
+	 *that for JPA it creates single connection object and same for camel-sql datasource
+	 *placed in registry so the impact of these datasources if at present needs
+	 *to be evaluated. 
+	 * 
+	 */
+	
 	Map<String, String> entityMgrProps() {
 		 Map<String, String> props = new HashMap<String, String>();
 		 
-		/* Cannot use properites as they cannot be referenced from yaml file. 
-		 *    Properties props = new Properties();
-		   props.setProperty("javax.persistence.jdbc.url", "jdbc:mysql://192.168.99.100:43306/devoteam");
-		   props.setProperty("javax.persistence.jdbc.user", "root");
-		   props.setProperty("javax.persistence.jdbc.password", "example");
-		   props.setProperty("javax.persistence.jdbc.driver", "com.mysql.cj.jdbc.Driver");*/
 		   
 		 props.put("javax.persistence.jdbc.url", mysqlUrl);
 		 props.put("javax.persistence.jdbc.user", db_username);
@@ -97,7 +100,10 @@ public class SharedDBConfig {
 	  
 	  public org.springframework.orm.jpa.JpaTransactionManager txMgr() {
 		  JpaTransactionManager txMgr = new JpaTransactionManager();
-		  txMgr.setDataSource(dataSource());
+		  txMgr.setDataSource(setupDataSource());
+		  /*Map<String, String> jpaProperties = new HashMap<String, String>();
+		  jpaProperties.put("propagationBehaviorName", "PROPAGATION_REQUIRES_NEW");
+		  txMgr.setJpaPropertyMap(jpaProperties);*/
 		  return txMgr;
 	  }
 	  

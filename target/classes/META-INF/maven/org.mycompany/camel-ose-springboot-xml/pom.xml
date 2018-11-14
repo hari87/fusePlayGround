@@ -43,7 +43,8 @@
 			<version>2.21.0.fuse-710018-redhat-00001</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId><!-- did not help to solve persistence issue -->
+			<groupId>org.springframework.boot</groupId><!-- did not help to solve 
+				persistence issue -->
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<!-- Camel -->
@@ -66,13 +67,16 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.camel</groupId><!-- this did not help to clear persistence issue -->
+			<groupId>org.apache.camel</groupId><!-- this did not help to clear persistence 
+				issue -->
 			<artifactId>camel-jpa-starter</artifactId>
 		</dependency>
 		<dependency>
-        <groupId>org.hibernate</groupId><!-- gave following error No persistence providers available for "camel" after trying the following discovered implementations: org.hibernate.jpa.HibernatePersistenceProvider -->
-        <artifactId>hibernate-entitymanager</artifactId>
-      </dependency>
+			<groupId>org.hibernate</groupId><!-- gave following error No persistence 
+				providers available for "camel" after trying the following discovered implementations: 
+				org.hibernate.jpa.HibernatePersistenceProvider -->
+			<artifactId>hibernate-entitymanager</artifactId>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -83,6 +87,12 @@
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.camel/camel-jackson -->
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jackson</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
@@ -100,6 +110,15 @@
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-sql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-netty4-http</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch.client</groupId>
+			<artifactId>elasticsearch-rest-high-level-client</artifactId>
+			<version>6.4.3</version>
 		</dependency>
 	</dependencies>
 	<repositories>

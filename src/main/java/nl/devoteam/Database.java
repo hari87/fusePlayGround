@@ -12,5 +12,9 @@ public class Database {
 	 public Iterable<User> findUsers() {
 	        return users.findAll();
 	    }
+	 
+	 public User findUser(Integer id) {
+	        return users.findOne(id);
+	}
 	
 }
